@@ -12,7 +12,7 @@ function tbr_salaries_form_alter(&$form, &$form_state, $form_id) {
     $form['institution']['#type'] = "select";
     $form['institution']['#size'] = null;
     $form['institution']['#options'] = array();
-	$form['institution']['#options'][''] = '';
+	$form['institution']['#options'][''] = '-- Select --';
 	
 	$results = null;
 	$cache_key = "salaries_institutions";
@@ -27,7 +27,7 @@ function tbr_salaries_form_alter(&$form, &$form_state, $form_id) {
 	   db_set_active('tbr_data_salaries');
 	   
 	   //Get distinct years
-	   $result = db_query('SELECT DISTINCT(institution) FROM salaries ORDER BY institution ASC');
+	   $result = db_query('SELECT DISTINCT institution, year FROM salaries ORDER BY institution ASC');
        $results = $result->fetchAll(); 
 	   cache_set($cache_key, $results, 'cache', CACHE_TEMPORARY);
 	   //drupal_set_message("Content Type List Saved to Cache");
@@ -48,7 +48,7 @@ function tbr_salaries_form_alter(&$form, &$form_state, $form_id) {
 	$form['year']['#type'] = "select";
 	$form['year']['#size'] = null;
 	$form['year']['#options'] = array();
-	$form['year']['#options'][""] = ""; 
+	$form['year']['#options'][""] = "-- Select --"; 
 	
 	$results = null;
 	$cache_key = "salaries_years";
@@ -74,15 +74,6 @@ function tbr_salaries_form_alter(&$form, &$form_state, $form_id) {
    foreach ($results as $record) {
 	   //Add the years to the select list array
 	   $form['year']['#options'][$record->year] = $record->year;
-   }
- 
-  }
-  
-
-}
-
-
-rd->year;
    }
  
   }
